@@ -39,3 +39,19 @@ class Document:
             text = f.read()
         title = path.name  # Use the filename as the title
         return cls(doc_id=doc_id, title=title, text=text)
+
+
+@dataclass
+class TextStatistics:
+    char_count: int
+    word_count: int
+    sentence_count: int
+    unique_words: int
+
+
+@dataclass
+class ProcessedDocument:
+    document: Document
+    cleaned_text: str
+    analysis_results: TextStatistics
+    text_chunks: list[str]
