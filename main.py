@@ -3,6 +3,7 @@ from src.document_processor.chunker import TextChunker
 from src.document_processor.cleaner import TextCleaner
 from src.document_processor.models import Document
 from src.document_processor.processor import DocumentProcessor
+from src.document_processor.repository import DocumentRepository
 
 
 def main():
@@ -14,10 +15,12 @@ def main():
     )
     processed_doc = document_processor.process(doc)
 
-    print(f"Document Title: {processed_doc.document.title}")
-    print(f"Cleaned Text: {processed_doc.cleaned_text}")
-    print(f"Analyzed: {processed_doc.analysis_results}")
-    print(f"Text Chunks: {processed_doc.text_chunks}")
+    repository = DocumentRepository(storage_dir="data/processed")
+    repository.save_document(processed_doc)
+
+    loaded_doc = repository.get_document(document_id="1")
+
+    print(loaded_doc)
 
 
 if __name__ == "__main__":

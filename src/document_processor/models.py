@@ -14,7 +14,7 @@ class Document:
     doc_id: str
     title: str
     text: str
-    created_at: datetime = field(default_factory=datetime.now)
+    # created_at: datetime = field(default_factory=datetime.now)
 
     def __len__(self) -> int:
         return len(self.text)
