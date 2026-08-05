@@ -1,6 +1,6 @@
 {
     "document": {
-        "doc_id": "1",
+        "doc_id": "doc1",
         "title": "sample.txt",
         "text": "    python\n    is \n    good.\n    python is great!\n    Python is amazing?"
     },
