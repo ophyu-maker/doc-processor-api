@@ -2,8 +2,6 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from document_processor.exceptions import (
-    DocumentNotFoundError,
-    DocumentProcessingError,
     UnsupportedFileError,
 )
 
@@ -28,12 +26,6 @@ class Document:
             path = Path(file_path)
             if path.suffix.lower() not in [".txt", ".md"]:
                 raise UnsupportedFileError(f"Unsupported file type: {path.suffix}")
-
-            if not path.exists():
-                raise DocumentNotFoundError(f"Document not found: {file_path}")
-
-            if not path.is_file():
-                raise DocumentProcessingError(f"Path is not a file: {file_path}")
 
             text = f.read()
         title = path.name  # Use the filename as the title

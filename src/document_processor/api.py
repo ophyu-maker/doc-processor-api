@@ -1,18 +1,63 @@
-from fastapi import FastAPI
-from document_processor.schemas import (
-    ProcessFileRequest,
-    ProcessTextRequest,
-    ProcessedDocumentResponse,
-    TextStatisticsResponse,
-)
-from document_processor.models import Document, ProcessedDocument
-from document_processor.service import DocumentService
-from document_processor.processor import DocumentProcessor
-from document_processor.repository import DocumentRepository
+from uuid import uuid4
+
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 
 from document_processor.analyzer import TextAnalyzer
 from document_processor.chunker import TextChunker
 from document_processor.cleaner import TextCleaner
+from document_processor.exceptions import (
+    DocumentNotFoundError,
+    DocumentProcessingError,
+    EmptyDocumentError,
+    UnsupportedFileError,
+)
+from document_processor.models import ProcessedDocument
+from document_processor.processor import DocumentProcessor
+from document_processor.repository import DocumentRepository
+from document_processor.schemas import (
+    ProcessedDocumentResponse,
+    ProcessFileRequest,
+    ProcessTextRequest,
+    TextStatisticsResponse,
+)
+from document_processor.service import DocumentService
+
+app = FastAPI(title="Document Processor API")
+
+
+@app.exception_handler(DocumentProcessingError)
+def document_processing_exception_handler(
+    request: Request, exc: DocumentProcessingError
+):
+    return JSONResponse(
+        status_code=400,
+        content={"message": str(exc)},
+    )
+
+
+@app.exception_handler(EmptyDocumentError)
+def document_empty_handler(request: Request, exc: EmptyDocumentError):
+    return JSONResponse(
+        status_code=400,
+        content={"message": str(exc)},
+    )
+
+
+@app.exception_handler(UnsupportedFileError)
+def unsupported_file_handler(request: Request, exc: UnsupportedFileError):
+    return JSONResponse(
+        status_code=400,
+        content={"message": str(exc)},
+    )
+
+
+@app.exception_handler(DocumentNotFoundError)
+def document_not_found_handler(request: Request, exc: DocumentNotFoundError):
+    return JSONResponse(
+        status_code=404,
+        content={"message": str(exc)},
+    )
 
 
 # Initialize the DocumentProcessor and DocumentService. Reduce repetition
@@ -41,9 +86,6 @@ def to_response(processed_doc: ProcessedDocument) -> ProcessedDocumentResponse:
     )
 
 
-app = FastAPI(title="Document Processor API")
-
-
 @app.get("/")
 def root():
     return {"message": "Welcome to the Document Processor API!"}
@@ -52,7 +94,9 @@ def root():
 @app.post("/documents/file", response_model=ProcessedDocumentResponse)
 def process_document(request: ProcessFileRequest):
 
-    processed_doc = service.process_file(doc_id="doc2", File_path=request.file_path)
+    processed_doc = service.process_file(
+        doc_id=str(uuid4()), File_path=request.file_path
+    )
 
     response = to_response(processed_doc)
     return response
@@ -61,7 +105,7 @@ def process_document(request: ProcessFileRequest):
 @app.post("/documents/texts", response_model=ProcessedDocumentResponse)
 def process_text(request: ProcessTextRequest):
     processed_doc = service.process_text(
-        doc_id="doc1", text=request.text, title=request.title
+        doc_id=str(uuid4()), text=request.text, title=request.title
     )
 
     response = to_response(processed_doc)

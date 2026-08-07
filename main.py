@@ -1,14 +1,15 @@
+from uuid import uuid4
+
 from src.document_processor.analyzer import TextAnalyzer
 from src.document_processor.chunker import TextChunker
 from src.document_processor.cleaner import TextCleaner
 from src.document_processor.processor import DocumentProcessor
 from src.document_processor.repository import DocumentRepository
-from src.document_processor.service import DocumentService
 from src.document_processor.schemas import (
-    TextStatisticsResponse,
     ProcessedDocumentResponse,
+    TextStatisticsResponse,
 )
-from pydantic import ValidationError
+from src.document_processor.service import DocumentService
 
 # def main() -> None:
 #     processor = DocumentProcessor(
@@ -40,7 +41,8 @@ def main() -> None:
     )
     repository = DocumentRepository(storage_dir="data/processed")
     service = DocumentService(repository=repository, processor=processor)
-    processed = service.process_file(doc_id="doc1", File_path="data/input/sample.txt")
+    doc_id = str(uuid4())  # Generate a unique document ID for each request
+    processed = service.process_file(doc_id=doc_id, File_path="data/input/sample.txt")
 
     response = ProcessedDocumentResponse(
         doc_id=processed.document.doc_id,
