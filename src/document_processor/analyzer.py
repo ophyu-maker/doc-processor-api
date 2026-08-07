@@ -1,4 +1,4 @@
-from src.document_processor.models import TextStatistics
+from document_processor.models import TextStatistics
 
 
 class TextAnalyzer:

@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from src.document_processor.models import Document, ProcessedDocument
-from src.document_processor.processor import DocumentProcessor
-from src.document_processor.repository import DocumentRepository
+from document_processor.models import Document, ProcessedDocument
+from document_processor.processor import DocumentProcessor
+from document_processor.repository import DocumentRepository
 
 
 class DocumentService:

@@ -1,7 +1,7 @@
-from src.document_processor.analyzer import TextAnalyzer
-from src.document_processor.chunker import TextChunker
-from src.document_processor.cleaner import TextCleaner
-from src.document_processor.models import Document, ProcessedDocument
+from document_processor.analyzer import TextAnalyzer
+from document_processor.chunker import TextChunker
+from document_processor.cleaner import TextCleaner
+from document_processor.models import Document, ProcessedDocument
 
 
 class DocumentProcessor:

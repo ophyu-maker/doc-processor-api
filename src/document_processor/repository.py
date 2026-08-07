@@ -2,8 +2,8 @@ import json
 from dataclasses import asdict
 from pathlib import Path
 
-from src.document_processor.exceptions import DocumentNotFoundError
-from src.document_processor.models import Document, ProcessedDocument, TextStatistics
+from document_processor.exceptions import DocumentNotFoundError
+from document_processor.models import Document, ProcessedDocument, TextStatistics
 
 
 class DocumentRepository:

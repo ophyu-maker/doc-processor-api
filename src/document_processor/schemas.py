@@ -13,6 +13,17 @@ class ProcessTextRequest(BaseModel):
         return v
 
 
+class ProcessFileRequest(BaseModel):
+    file_path: str
+
+    @field_validator("file_path")
+    @classmethod
+    def validate_fields(cls, v: str) -> str:
+        if not v.strip():
+            raise ValueError("Field must not be empty.")
+        return v
+
+
 class TextStatisticsResponse(BaseModel):
     char_count: int
     word_count: int
