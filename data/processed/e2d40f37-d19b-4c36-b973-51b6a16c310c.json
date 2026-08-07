@@ -1,0 +1,17 @@
+{
+    "document": {
+        "doc_id": "e2d40f37-d19b-4c36-b973-51b6a16c310c",
+        "title": "string",
+        "text": "stringstrgstrg"
+    },
+    "cleaned_text": "stringstrgstrg",
+    "analysis_results": {
+        "char_count": 14,
+        "word_count": 1,
+        "sentence_count": 0,
+        "unique_words": 1
+    },
+    "text_chunks": [
+        "stringstrgstrg"
+    ]
+}

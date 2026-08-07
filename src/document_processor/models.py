@@ -1,10 +1,7 @@
-from dataclasses import dataclass, field
-from datetime import datetime
+from dataclasses import dataclass
 from pathlib import Path
 
-from src.document_processor.exceptions import (
-    DocumentNotFoundError,
-    DocumentProcessingError,
+from document_processor.exceptions import (
     UnsupportedFileError,
 )
 
@@ -14,7 +11,7 @@ class Document:
     doc_id: str
     title: str
     text: str
-    created_at: datetime = field(default_factory=datetime.now)
+    # created_at: datetime = field(default_factory=datetime.now)
 
     def __len__(self) -> int:
         return len(self.text)
@@ -29,12 +26,6 @@ class Document:
             path = Path(file_path)
             if path.suffix.lower() not in [".txt", ".md"]:
                 raise UnsupportedFileError(f"Unsupported file type: {path.suffix}")
-
-            if not path.exists():
-                raise DocumentNotFoundError(f"Document not found: {file_path}")
-
-            if not path.is_file():
-                raise DocumentProcessingError(f"Path is not a file: {file_path}")
 
             text = f.read()
         title = path.name  # Use the filename as the title

@@ -1,4 +1,4 @@
-from src.document_processor.exceptions import EmptyDocumentError
+from document_processor.exceptions import EmptyDocumentError
 
 
 class TextCleaner:
