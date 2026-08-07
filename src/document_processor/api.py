@@ -1,3 +1,4 @@
+import logging
 from uuid import uuid4
 
 from fastapi import FastAPI, Request
@@ -22,6 +23,15 @@ from document_processor.schemas import (
     TextStatisticsResponse,
 )
 from document_processor.service import DocumentService
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.StreamHandler(),
+        logging.FileHandler("logs/app.log"),
+    ],
+)
 
 app = FastAPI(title="Document Processor API")
 
@@ -54,6 +64,14 @@ def unsupported_file_handler(request: Request, exc: UnsupportedFileError):
 
 @app.exception_handler(DocumentNotFoundError)
 def document_not_found_handler(request: Request, exc: DocumentNotFoundError):
+    return JSONResponse(
+        status_code=404,
+        content={"message": str(exc)},
+    )
+
+
+@app.exception_handler(FileNotFoundError)
+def file_not_found_handler(request: Request, exc: FileNotFoundError):
     return JSONResponse(
         status_code=404,
         content={"message": str(exc)},
@@ -95,7 +113,7 @@ def root():
 def process_document(request: ProcessFileRequest):
 
     processed_doc = service.process_file(
-        doc_id=str(uuid4()), File_path=request.file_path
+        doc_id=str(uuid4()), file_path=request.file_path
     )
 
     response = to_response(processed_doc)

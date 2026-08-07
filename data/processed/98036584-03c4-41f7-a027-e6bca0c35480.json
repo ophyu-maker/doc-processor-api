@@ -1,0 +1,18 @@
+{
+    "document": {
+        "doc_id": "98036584-03c4-41f7-a027-e6bca0c35480",
+        "title": "sample.txt",
+        "text": "    python\n    is \n    good.\n    python is great!\n    Python is amazing?"
+    },
+    "cleaned_text": "python is good. python is great! Python is amazing?",
+    "analysis_results": {
+        "char_count": 51,
+        "word_count": 9,
+        "sentence_count": 3,
+        "unique_words": 5
+    },
+    "text_chunks": [
+        "python is good. python is",
+        "great! Python is amazing?"
+    ]
+}

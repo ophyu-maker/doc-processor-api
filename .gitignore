@@ -12,3 +12,7 @@ wheels/
 #environment files
 .env
 .env.example
+
+#log files
+logs/*.log
+*.log
