@@ -24,7 +24,7 @@ class Document:
         """Create a Document instance from a file."""
         with open(file_path, "r", encoding="utf-8") as f:
             path = Path(file_path)
-            if path.suffix.lower() not in [".txt", ".md"]:
+            if path.suffix.lower() not in [".txt", ".md", ".json"]:
                 raise UnsupportedFileError(f"Unsupported file type: {path.suffix}")
 
             text = f.read()
