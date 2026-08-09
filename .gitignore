@@ -16,3 +16,6 @@ wheels/
 #log files
 logs/*.log
 *.log
+
+#tmp files
+data/processed/*.json
