@@ -11,7 +11,7 @@ def test_process_text(tmp_path):
     processor = DocumentProcessor(
         cleaner=TextCleaner(),
         analyzer=TextAnalyzer(),
-        chunker=TextChunker(chunk_size=5),
+        chunker=TextChunker(chunk_size=2),
     )
 
     repository = DocumentRepository(storage_dir=tmp_path)
@@ -35,7 +35,7 @@ def test_process_file(tmp_path):
     processor = DocumentProcessor(
         cleaner=TextCleaner(),
         analyzer=TextAnalyzer(),
-        chunker=TextChunker(chunk_size=5),
+        chunker=TextChunker(chunk_size=2),
     )
 
     repository = DocumentRepository(storage_dir=storage_dir)
@@ -45,3 +45,39 @@ def test_process_file(tmp_path):
 
     assert result.cleaned_text == "Python is great"
     assert result.document.doc_id == "123"
+
+
+def test_get_processed_doc(tmp_path):
+    processor = DocumentProcessor(
+        cleaner=TextCleaner(),
+        analyzer=TextAnalyzer(),
+        chunker=TextChunker(chunk_size=2),
+    )
+
+    repository = DocumentRepository(storage_dir=tmp_path)
+    service = DocumentService(repository=repository, processor=processor)
+
+    service.process_text(doc_id="123", title="test.txt", text=" Python is great ")
+
+    result = service.get_processed_document("123")
+
+    assert result.cleaned_text == "Python is great"
+    assert len(result.text_chunks) == 2
+
+
+def test_delete_processed_doc(tmp_path):
+    processor = DocumentProcessor(
+        cleaner=TextCleaner(),
+        analyzer=TextAnalyzer(),
+        chunker=TextChunker(chunk_size=2),
+    )
+
+    repository = DocumentRepository(storage_dir=tmp_path)
+    service = DocumentService(repository=repository, processor=processor)
+
+    service.process_text(doc_id="123", title="test.txt", text=" Python is great ")
+    saved_file = tmp_path / "123.json"
+    assert saved_file.exists()
+
+    service.delete_processed_document("123")
+    assert not saved_file.exists()
