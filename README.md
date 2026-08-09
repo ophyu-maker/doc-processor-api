@@ -51,8 +51,9 @@ DocumentProcessor
 DocumentRepository
     ↓
 JSON Storage
+```
 
-# Document Processor API
+# Learning Goal
 
 This project was created to practice building a Python backend using a structured software-engineering approach rather than putting all application logic in one file.
 Key concepts practiced include:
