@@ -11,13 +11,13 @@ The API accepts text or a local text file, cleans and analyzes the content, spli
 - Pydantic
 - Pytest
 - uv
-- ruff
+- Ruff
 - Git / GitHub
 
 ## Features
 
 - Process raw text
-- Process `.txt` and `.md` files
+- Process `.txt` , `.json`  and `.md` files
 - Normalize whitespace
 - Analyze text statistics
   - character count
@@ -27,7 +27,7 @@ The API accepts text or a local text file, cleans and analyzes the content, spli
 - Split text into configurable word-based chunks
 - Save processed documents as JSON
 - Retrieve processed documents by ID
-- Delete processed documents
+- Delete processed documents by ID
 - Pydantic request/response validation
 - Custom exception handling
 - Application logging
