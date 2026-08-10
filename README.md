@@ -11,6 +11,7 @@ The API accepts text or a local text file, cleans and analyzes the content, spli
 - Pydantic
 - Pytest
 - uv
+- ruff
 - Git / GitHub
 
 ## Features
